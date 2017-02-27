@@ -56,7 +56,7 @@ public class Testing {
 	    game.moveHunter(Direction.NORTH);
 	    game.moveHunter(Direction.SOUTH);
 	    for (int index = 0; index < 10; index++) {
-		game.moveHunter(Direction.EAST);
+		game.moveHunter(Direction.NORTH);
 		game.getWarningMessage();
 		game.moveHunter(Direction.WEST);
 		game.getWarningMessage();
@@ -84,7 +84,7 @@ public class Testing {
 		game.shootArrow(Direction.NORTH);
 	    } else if (count <= 2000) {
 		game.shootArrow(Direction.SOUTH);
-	    } else if(count <= 3000) {
+	    } else if (count <= 3000) {
 		game.shootArrow(Direction.EAST);
 	    } else {
 		game.shootArrow(Direction.WEST);
