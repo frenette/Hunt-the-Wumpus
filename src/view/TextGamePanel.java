@@ -1,5 +1,14 @@
+/*
+ * Alexander Frenette
+ * Project 4 : Hunt the Wumpus
+ * csc 335
+ * Due February 27 2017
+ * Description : A recreation of a classical game that moves a hunter to find the Wumpus
+ */
+
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -34,10 +43,15 @@ public class TextGamePanel extends JPanel implements Observer {
     }
     
     private void initilizeWarningJLabel() {
+	this.warningMessage = new JLabel(this.game.getWarningMessage());
+	
 	/*
 	 *  TODO : set the font size, set the proffered size etc.
 	 */
-	this.warningMessage = new JLabel(this.game.getWarningMessage());
+	int newFontSize = (int) (26);
+	Font thisFont = new Font("Courier", Font.BOLD, newFontSize);
+	this.warningMessage.setFont(thisFont);
+	
 	this.add(this.warningMessage);
     }
 
@@ -73,7 +87,16 @@ public class TextGamePanel extends JPanel implements Observer {
 	 * TODO : called whenever the GameModel has changed. Re-render the game
 	 * state.
 	 */
-	this.warningMessage.setText(this.game.getWarningMessage());
+	if (this.game.isStillRunning()) {
+	    this.warningMessage.setText(this.game.getWarningMessage());
+	} else {
+	    if (this.game.hunterWon()) {
+		this.warningMessage.setText("The Hunter WON!");
+	    } else {
+		this.warningMessage.setText("The Hunter has been Defeated!");
+	    }
+	}
+	
 	this.textArea.setText(this.game.toString());
     }
 

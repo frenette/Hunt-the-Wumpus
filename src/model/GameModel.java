@@ -1,3 +1,11 @@
+/*
+ * Alexander Frenette
+ * Project 4 : Hunt the Wumpus
+ * csc 335
+ * Due February 27 2017
+ * Description : A recreation of a classical game that moves a hunter to find the Wumpus
+ */
+
 package model;
 
 import java.util.ArrayList;
@@ -153,13 +161,13 @@ public class GameModel extends Observable {
     public void moveHunter(Direction direction) {
 	Position tempPosition;
 
-	if (direction == Direction.UP) {
+	if (direction == Direction.NORTH) {
 	    // UP
 	    tempPosition = new Position(this.hunterPosition.getRow() - 1, this.hunterPosition.getColumn());
-	} else if (direction == Direction.DOWN) {
+	} else if (direction == Direction.SOUTH) {
 	    // DOWN
 	    tempPosition = new Position(this.hunterPosition.getRow() + 1, this.hunterPosition.getColumn());
-	} else if (direction == Direction.LEFT) {
+	} else if (direction == Direction.WEST) {
 	    // LEFT
 	    tempPosition = new Position(this.hunterPosition.getRow(), this.hunterPosition.getColumn() - 1);
 	} else {
@@ -198,7 +206,7 @@ public class GameModel extends Observable {
 	}
     }
 
-    private void makeAllRoomsVissible() {
+    public void makeAllRoomsVissible() {
 	for (int row = 0; row < this.boardRow; row++) {
 	    for (int column = 0; column < this.boardColumn; column++) {
 		this.getRoom(row, column).setVisited();
@@ -253,11 +261,11 @@ public class GameModel extends Observable {
 	boolean killedWumpus = false;
 
 	if (this.hunterPosition.getRow() == this.wumpusPosition.getRow()) {
-	    if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+	    if (direction == Direction.WEST || direction == Direction.EAST) {
 		killedWumpus = true;
 	    }
 	} else if (this.hunterPosition.getColumn() == this.wumpusPosition.getColumn()) {
-	    if (direction == Direction.UP || direction == Direction.DOWN) {
+	    if (direction == Direction.NORTH || direction == Direction.SOUTH) {
 		killedWumpus = true;
 	    }
 	}
@@ -286,8 +294,6 @@ public class GameModel extends Observable {
 
 	for (int row = 0; row < this.boardRow; row++) {
 	    for (int column = 0; column < this.boardColumn; column++) {
-		// System.out.println("Row : " + row + " Column : " + column + "
-		// Board Char : " + this.board[row][column].toString());
 
 		returnString += "[";
 		returnString += this.board[row][column].toString();
@@ -315,14 +321,14 @@ public class GameModel extends Observable {
 	}
     }
 
-    private boolean isWumpusDead() {
-	Room huntersRoom = this.getRoom(this.hunterPosition);
-	if (huntersRoom.isPit() || huntersRoom.hasWumpus()) {
-	    return true;
-	} else {
-	    return false;
-	}
-    }
+//    public boolean isWumpusDead() {
+//	Room huntersRoom = this.getRoom(this.hunterPosition);
+//	if (huntersRoom.isPit() || huntersRoom.hasWumpus()) {
+//	    return true;
+//	} else {
+//	    return false;
+//	}
+//    }
 
     public boolean isStillRunning() {
 	if (this.hunterDead || this.wompasDead == true) {

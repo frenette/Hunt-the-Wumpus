@@ -15,3 +15,17 @@ You must have from three to five slime pits, which could vary between games
 	- radius = 1 of slime
 	
 TODO : 
+
+	/*
+	 * Start tabs : the problem with tabs is it becomes the action listener
+	 */
+	jTabb = new JTabbedPane();
+	jTabb.add("Text Game View", this.textView);
+	jTabb.addTab("Graphical Game View", this.graphicalView);
+	jTabb.addKeyListener(this.hunterKeyListener);
+	this.add(jTabb);
+	/*
+	 * End tabs
+	 */
+
+	// this.add(this.graphicalView);

@@ -1,3 +1,11 @@
+/*
+ * Alexander Frenette
+ * Project 4 : Hunt the Wumpus
+ * csc 335
+ * Due February 27 2017
+ * Description : A recreation of a classical game that moves a hunter to find the Wumpus
+ */
+
 package model;
 
 public class Position {
@@ -11,7 +19,7 @@ public class Position {
     /*
      * Because of the wrap around I will be taking care of the position in here
      */
-    Position(int row, int column) {
+    public Position(int row, int column) {
 	this.row = row % this.boardRow;
 	if (this.row < 0) {
 	    this.row += this.boardRow;

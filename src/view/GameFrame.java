@@ -1,34 +1,28 @@
+/*
+ * Alexander Frenette
+ * Project 4 : Hunt the Wumpus
+ * csc 335
+ * Due February 27 2017
+ * Description : A recreation of a classical game that moves a hunter to find the Wumpus
+ */
+
 package view;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Observer;
-
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JToggleButton;
 
 import controller.HunterKeyListener;
-import model.Direction;
 import model.GameModel;
 
 public class GameFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    // Keep game model
     private GameModel game;
 
     private HunterKeyListener hunterKeyListener;
 
-    JTabbedPane jTabb;
+    private JTabbedPane jTabb;
     private TextGamePanel textView;
     private GraphicalGamePanel graphicalView;
 
@@ -42,32 +36,29 @@ public class GameFrame extends JFrame {
 	this.textView = new TextGamePanel(this.game, this.hunterKeyListener);
 	this.graphicalView = new GraphicalGamePanel(this.game, this.hunterKeyListener);
 
+	// add the observers
+	this.addObservers();
+
 	/*
 	 * Start tabs : the problem with tabs is it becomes the action listener
 	 */
 	jTabb = new JTabbedPane();
-	// TODO
-	jTabb.addKeyListener(this.hunterKeyListener);
 	jTabb.add("Text Game View", this.textView);
 	jTabb.addTab("Graphical Game View", this.graphicalView);
-	jTabb.setBackground(Color.RED);
+	jTabb.addKeyListener(this.hunterKeyListener);
 	this.add(jTabb);
-
-	// this.add(this.graphicalView);
-
 	/*
 	 * End tabs
 	 */
 
-	// add the observers
-	this.addObservers();
+	// this.add(this.graphicalView);
 
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setSize(600, 600);
-	this.setLocation(100, 40);
+	this.setSize(600, 650);
+	this.setLocation(200, 100);
 	this.setTitle("Hunt The Wumpus");
 
-	// TODO
+	// Needed if I am using jpanel alone
 	this.addKeyListener(this.hunterKeyListener);
 
 	this.setVisible(true);

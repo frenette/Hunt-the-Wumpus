@@ -1,3 +1,11 @@
+/*
+ * Alexander Frenette
+ * Project 4 : Hunt the Wumpus
+ * csc 335
+ * Due February 27 2017
+ * Description : A recreation of a classical game that moves a hunter to find the Wumpus
+ */
+
 package controller;
 
 import java.awt.event.KeyEvent;
@@ -25,13 +33,13 @@ public class HunterKeyListener implements KeyListener {
 	    Direction moveDirection;
 
 	    if (keyPressed == 'w') {
-		moveDirection = Direction.UP;
+		moveDirection = Direction.NORTH;
 	    } else if (keyPressed == 's') {
-		moveDirection = Direction.DOWN;
+		moveDirection = Direction.SOUTH;
 	    } else if (keyPressed == 'a') {
-		moveDirection = Direction.LEFT;
+		moveDirection = Direction.WEST;
 	    } else if (keyPressed == 'd') {
-		moveDirection = Direction.RIGHT;
+		moveDirection = Direction.EAST;
 	    } else {
 		moveDirection = Direction.UNKNOWN;
 	    }
@@ -60,13 +68,13 @@ public class HunterKeyListener implements KeyListener {
 	    Direction moveDirection;
 
 	    if (keyPressed == KeyEvent.VK_UP) {
-		moveDirection = Direction.UP;
+		moveDirection = Direction.NORTH;
 	    } else if (keyPressed == KeyEvent.VK_DOWN) {
-		moveDirection = Direction.DOWN;
+		moveDirection = Direction.SOUTH;
 	    } else if (keyPressed == KeyEvent.VK_LEFT) {
-		moveDirection = Direction.LEFT;
+		moveDirection = Direction.WEST;
 	    } else if (keyPressed == KeyEvent.VK_RIGHT) {
-		moveDirection = Direction.RIGHT;
+		moveDirection = Direction.EAST;
 	    } else {
 		moveDirection = Direction.UNKNOWN;
 	    }

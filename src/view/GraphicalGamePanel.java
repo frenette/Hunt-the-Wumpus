@@ -1,6 +1,15 @@
+/*
+ * Alexander Frenette
+ * Project 4 : Hunt the Wumpus
+ * csc 335
+ * Due February 27 2017
+ * Description : A recreation of a classical game that moves a hunter to find the Wumpus
+ */
+
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -29,27 +38,11 @@ public class GraphicalGamePanel extends JPanel implements Observer {
 	this.game = game;
 	this.hunterKeyListener = hunterKeyListener;
 	this.addKeyListener(this.hunterKeyListener);
-	
-	// set background color
-	this.setBackground(Color.RED);
-	revalidate();
-	repaint();
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-	/*
-	 * TODO : called whenever the GameModel has changed. Rerender the game
-	 * state.
-	 */
-	revalidate();
-	repaint();
     }
 
     public void paintComponent(Graphics g) {
 	Graphics2D graphics = (Graphics2D) g;
 
-	// Read from images folder parallel to src in your project
 	int imgHeight = 50;
 	int imgWidth = 50;
 
@@ -59,11 +52,7 @@ public class GraphicalGamePanel extends JPanel implements Observer {
 	int rowCount = 10;
 	int columnCount = 10;
 
-	// set background color
-	this.setBackground(Color.RED);
-
 	try {
-
 	    BufferedImage img = null;
 
 	    BufferedImage wumpusImg = ImageIO.read(new File("images/Wumpus.png"));
@@ -75,19 +64,15 @@ public class GraphicalGamePanel extends JPanel implements Observer {
 	    BufferedImage emptyRoomImg = ImageIO.read(new File("images/Ground.png"));
 	    BufferedImage black = ImageIO.read(new File("images/Black.png"));
 
-	    for (int row = 0; row < rowCount; row++, imgX += imgWidth) {
-		// reset imgY back to 0;
-		imgY = 0;
-
-		for (int column = 0; column < columnCount; column++, imgY += imgWidth) {
+	    // Set the state of Y = 0
+	    for (int row = 0; row < rowCount; row++, imgY += imgHeight, imgX = 0) {
+		for (int column = 0; column < columnCount; column++, imgX += imgWidth) {
 		    // get the state of the room
 		    Room thisRoom = this.game.getRoom(row, column);
 
 		    if (thisRoom.isVisited()) {
-			// we can draw it
 			// get the GamePiece in the room
 			GamePiece gamePiece = thisRoom.getGamePieceGraphicalView();
-			// System.out.println(gamePiece.toString());
 
 			switch (gamePiece) {
 			case PIT:
@@ -110,21 +95,23 @@ public class GraphicalGamePanel extends JPanel implements Observer {
 			    break;
 			}
 
-			// draw the piece
-			// System.out.println("Does it equal : " + (img ==
-			// slimeImg));
-			graphics.drawImage(emptyRoomImg, imgY, imgX, imgHeight, imgWidth, null);
-			graphics.drawImage(img, imgY, imgX, imgHeight, imgWidth, null);
+			// always draw the floor
+			graphics.drawImage(emptyRoomImg, imgX, imgY, imgHeight, imgWidth, null);
+			// draw the element in the room
+			graphics.drawImage(img, imgX, imgY, imgHeight, imgWidth, null);
+
+			// draw the hunter
 			if (thisRoom.hasHunter()) {
-			    graphics.drawImage(hunterImg, imgY, imgX, imgHeight, imgWidth, null);
+			    graphics.drawImage(hunterImg, imgX, imgY, imgHeight, imgWidth, null);
 			}
+
+			// draw the wumpus
 			if (thisRoom.hasWumpus()) {
-			    graphics.drawImage(wumpusImg, imgY, imgX, imgHeight, imgWidth, null);
+			    graphics.drawImage(wumpusImg, imgX, imgY, imgHeight, imgWidth, null);
 			}
 		    } else {
-			// do not draw it
-			graphics.drawImage(black, imgY, imgX, imgHeight, imgWidth, null);
-			continue;
+			// draw the black room for those not visited
+			graphics.drawImage(black, imgX, imgY, imgHeight, imgWidth, null);
 		    }
 		}
 	    }
@@ -134,14 +121,19 @@ public class GraphicalGamePanel extends JPanel implements Observer {
 	     */
 	    if (!this.game.isStillRunning()) {
 		String message;
-		int newFontSize = (int) (42);
+		Dimension thisDimension = this.getSize();
+		int thisHeight = (int) thisDimension.getHeight();
+		int thisWidth = (int) thisDimension.getWidth();
+		
+		int newFontSize = (int) (26);
+		
 		Font thisFont = new Font("Courier", Font.BOLD, newFontSize);
 		FontMetrics metrics = graphics.getFontMetrics(thisFont);
 		graphics.setFont(thisFont);
 		graphics.setColor(Color.WHITE);
 
-		int centerX = 500 / 2;
-		int centerY = 500 / 2;
+		int centerX = thisWidth / 2;
+		int centerY = thisHeight / 2;
 
 		if (this.game.hunterWon()) {
 		    message = "The Hunter Has WON!";
@@ -155,5 +147,10 @@ public class GraphicalGamePanel extends JPanel implements Observer {
 	} catch (Exception e) {
 	    System.out.println("ERROR : painting");
 	}
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+	this.repaint();
     }
 }
